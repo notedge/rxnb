@@ -1,0 +1,6 @@
+{
+    "private": true,
+    "scripts": {
+        "web": "cd projects/notebook-web && trunk serve"
+    }
+}

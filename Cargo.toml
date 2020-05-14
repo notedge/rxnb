@@ -1,0 +1,13 @@
+[workspace]
+members = ["projects/*"]
+default-members = [
+    # "projects/notebook-rs",
+    # "projects/notebook-cilent",
+    "projects/notebook-web",
+]
+exclude = [
+    "projects/.DS_Store",
+]
+
+[profile.release]
+lto = true

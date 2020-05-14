@@ -1,0 +1,35 @@
+# Cache
+__pycache__
+external/*.*
+!external/*.m
+!external/*.md
+
+# IDE
+.vscode
+.idea
+*.iml
+
+# Database
+*.nb
+*.mx
+*-base.csv
+*.ps1
+
+# RAR
+*.zip
+*.tar
+*.gz
+*.rar
+
+# Picture
+*.jpg
+*.jpeg
+*.bmp
+*.png
+
+# Build
+node_modules/
+target/
+dist/
+yarn.lock
+Cargo.lock
