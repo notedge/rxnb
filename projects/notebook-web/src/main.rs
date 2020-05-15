@@ -43,12 +43,22 @@ impl Component for Model {
     fn view(&self) -> Html {
         html! {
         <>
-        <header> </header>
+        <header>
+          <div id="header-logo"><a href="/logo.svg"> </a></div>
+            </header>
         <main class="notebook-horizontal">
-            <aside> </aside>
-            <div class="reactive-notebooks">
-
-                <NotebookCell/>
+            <aside class="notebook-left-pane">
+            <span>{"icon"}</span>
+            </aside>
+            <div class="notebook-right-pane">
+                <nav class="notebook-tab">{"title"}</nav>
+                <article class="notebook-body">
+                    <NotebookCell/>
+                    <NotebookCell/>
+                    <NotebookCell/>
+                    <NotebookCell/>
+                    <NotebookCell/>
+                </article>
             </div>
         </main>
         // <footer> </footer>
