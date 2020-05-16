@@ -8,6 +8,7 @@ use yew::{
 };
 
 use rxnb::cell::NotebookCell;
+use rxnb::widgets::{NotebookHeader, NotebookLeftPanel, NotebookTabs};
 
 mod cell;
 
@@ -43,15 +44,11 @@ impl Component for Model {
     fn view(&self) -> Html {
         html! {
         <>
-        <header>
-          <div id="header-logo"><a href="/logo.svg"> </a></div>
-            </header>
+        <NotebookHeader/>
         <main class="notebook-horizontal">
-            <aside class="notebook-left-pane">
-            <span>{"icon"}</span>
-            </aside>
+            <NotebookLeftPanel/>
             <div class="notebook-right-pane">
-                <nav class="notebook-tab">{"title"}</nav>
+                <NotebookTabs/>
                 <article class="notebook-body">
                     <NotebookCell/>
                     <NotebookCell/>
