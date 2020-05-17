@@ -47,7 +47,7 @@ impl Component for Model {
         <NotebookHeader/>
         <main class="notebook-horizontal">
             <NotebookLeftPanel/>
-            <div class="notebook-right-pane">
+            <div class="notebook-right-panel">
                 <NotebookTabs/>
                 <article class="notebook-body">
                     <NotebookCell/>

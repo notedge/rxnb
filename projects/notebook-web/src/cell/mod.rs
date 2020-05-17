@@ -92,14 +92,43 @@ impl Component for NotebookCell {
     }
 
     fn view(&self) -> Html {
-        let key = self.link.callback(Event::Press);
-        let txt = self.link.callback(Event::Input);
 
         html! {
-            <div>
-                <h1>{"in"}</h1>
+            <div data-node-id=self.id class="notebook-cell">
+                //<div class="drag-marker-before"></div>
+                //<div class="drag-marker-after"></div>
+                <button class="cell-create">
+                    <div class="tooltip">
+                        <svg viewBox="0 0 15 15" width="15" height="15" stroke="currentColor"
+                            style="stroke-width: 1; stroke-linecap: round;">
+                            <line x1="7.5" x2="7.5" y1="2.5" y2="12.5"></line>
+                            <line y1="7.5" y2="7.5" x1="2.5" x2="12.5"></line>
+                        </svg>
+                        <div class="tooltip-text">
+                    //        {"Click to insert new cell (alt-enter)"}
+                        </div>
+                    </div>
+                </button>
+                <div class="cell-body">
+                    <div class="cell-left-panel">
+                        <button class="more-ops"></button>
+                    </div>
+                    <div class="cell-right-panel">
+                    {self.input_area()}
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
+impl NotebookCell {
+    fn input_area(&self) {
+        let key = self.link.callback(Event::Press);
+        let txt = self.link.callback(Event::Input);
+        html! {
             <pre
-                class="input-cell"
+                class="cell-input-area"
                 contenteditable="true"
                 spellcheck="false"
                 placeholder="notedown mode"
@@ -107,18 +136,10 @@ impl Component for NotebookCell {
                 oninput=txt
             >
             </pre>
-            <h2>{"id: "} {&self.id}</h2>
-            <h2>{"kind: "} {&self.kind}</h2>
-
-            <h1>{"out"}</h1>
-            {self.out.to_owned()}
-            </div>
         }
     }
-}
 
-impl NotebookCell {
-    fn get_input(&mut self) {}
+    //fn get_input(&mut self) {}
 
-    fn update_out(&mut self) {}
+    //fn update_out(&mut self) {}
 }

@@ -1,4 +1,4 @@
-pub use widgets::NotebookHeader;
+#![recursion_limit = "1024"]
 
 pub mod cell;
 pub mod object;

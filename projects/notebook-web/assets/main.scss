@@ -42,7 +42,7 @@ header {
     // position: relative;
 }
 
-.notebook-left-pane {
+.notebook-left-panel {
     display: flex;
     flex-shrink: 0;
     border-right: 1px solid $nb-border-color;
@@ -51,7 +51,7 @@ header {
     will-change: opacity;
 }
 
-.notebook-right-pane {
+.notebook-right-panel {
     display: flex;
     flex-flow: column;
     flex-shrink: 0;
@@ -71,6 +71,66 @@ header {
     flex-shrink: 0;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+
+.notebook-cell {
+    margin-top: 17px;
+    margin-bottom: 17px;
+    padding-top: 0px;
+}
+
+.tooltip {
+    position: relative;
+    // display: inline-block;
+    // margin: 4em;
+}
+
+.tooltip-text {
+    position: absolute;
+    //top: -2em;
+    //left: 50%;
+    //width: 200px;
+    display: none;
+    white-space: nowrap;
+    // transform: translate(-50%, 0);
+}
+
+.tooltip:hover .tooltip-text {
+    display: block;
+}
+
+.cell-create {
+    // top: -20px;
+    // left: -12px;
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    background-color: #00000000;
+    border-color: #00000000;
+    //border-image: none;
+    //border-style: none;
+    outline: none;
+    color: $nb-border-color;
+
+    &:hover {
+        background-color: #eeeeee;
+        color: #333333;
+    }
+
+    .tooltip {
+        border-bottom: none;
+    }
+}
+
+.cell-body {
+    display: flex;
+    flex-flow: row;
+}
+
+.cell-left-panel {
+    display: flex;
+    flex-flow: column;
 }
 
 @media screen and (min-width: 768px) {
