@@ -15,6 +15,6 @@ crate-type = ["cdylib", "rlib"]
 yew = "0.17"
 anyhow = "1.0"
 
-#[dependencies.monaco]
-#version = "0.1"
-#features = ["yew-components"]
+[dependencies.monaco]
+version = "0.1"
+features = ["yew-components"]

@@ -1,6 +1,9 @@
 use std::iter::FromIterator;
 use std::rc::Rc;
 
+use monaco::api::CodeEditorOptions;
+use monaco::sys::editor::IDimension;
+use monaco::yew::{CodeEditor, CodeEditorLink};
 use yew::prelude::*;
 use yew::services::ConsoleService;
 use yew::web_sys::KeyboardEvent;
@@ -37,11 +40,10 @@ pub enum CellState {
 
 pub struct NotebookCell {
     link: ComponentLink<Self>,
+    editor_link: CodeEditorLink,
     id: usize,
     state: CellState,
     kind: String,
-    input: String,
-    input_render: String,
     out: Html,
 }
 
@@ -55,34 +57,34 @@ impl Component for NotebookCell {
             id: 0,
             state: CellState::Unevaluated,
             kind: "".to_string(),
-            input: "".to_string(),
-            input_render: "".to_string(),
+            editor_link: CodeEditorLink::default(),
             out: Html::from(200),
         }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
-            Event::Input(s) => {
-                self.input = s.value;
+            Event::Input(_s) => {
+                // self.input = s.value;
                 false
             }
             Event::Length(_) => { false }
             Event::Mode(_) => { false }
             Event::Update(_) => { false }
-            Event::Press(key) => {
-                self.out = Html::from_iter(self.input.lines().map(|e| html! { <div>{e}</div>}));
-                ConsoleService::info(&key.code());
-                match key {
-                    key if key.code() == "Enter" && key.shift_key() == true => {
-                        // evaluate and select next cell
-                        true
-                    },
-                    key if key.code() == "Enter" && key.ctrl_key() == true => {
-                        true
-                    },
-                    _ => false
-                }
+            Event::Press(_key) => {
+                // self.out = Html::from_iter(self.input.lines().map(|e| html! { <div>{e}</div>}));
+                // ConsoleService::info(&key.code());
+                // match key {
+                //     key if key.code() == "Enter" && key.shift_key() == true => {
+                //         // evaluate and select next cell
+                //         true
+                //     },
+                //     key if key.code() == "Enter" && key.ctrl_key() == true => {
+                //         true
+                //     },
+                //     _ => false
+                // }
+                false
             }
         }
     }
@@ -92,7 +94,6 @@ impl Component for NotebookCell {
     }
 
     fn view(&self) -> Html {
-
         html! {
             <div data-node-id=self.id class="notebook-cell">
                 //<div class="drag-marker-before"></div>
@@ -115,7 +116,9 @@ impl Component for NotebookCell {
                     </div>
                     <div class="cell-right-panel">
                     {self.input_area()}
+                    {self.out.to_owned()}
                     </div>
+                    <div class="cell-right-empty"/>
                 </div>
             </div>
         }
@@ -123,19 +126,22 @@ impl Component for NotebookCell {
 }
 
 impl NotebookCell {
-    fn input_area(&self) {
-        let key = self.link.callback(Event::Press);
-        let txt = self.link.callback(Event::Input);
+    fn input_area(&self) -> Html {
+        //let key = self.link.callback(Event::Press);
+        //let txt = self.link.callback(Event::Input);
+        let options = CodeEditorOptions {
+            dimension: Some(IDimension::new(800, 300)),
+            theme: None,
+            model: None,
+            language: None,
+            value: None,
+        };
+
         html! {
-            <pre
-                class="cell-input-area"
-                contenteditable="true"
-                spellcheck="false"
-                placeholder="notedown mode"
-                onkeypress=key
-                oninput=txt
-            >
-            </pre>
+            <CodeEditor
+                link=self.editor_link.clone()
+                options=Rc::new(options)
+            />
         }
     }
 
