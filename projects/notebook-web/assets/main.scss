@@ -138,7 +138,20 @@ header {
 }
 
 .cell-right-panel {
+    position: relative;
     flex-basis: $nb-cell-width;
+}
+
+
+.cell-toolbar {
+    background: #ffffff;
+    border-radius: 3px;
+    box-shadow: 1px 1px #AAAAAA;
+    display: flex;
+    position: absolute;
+    right: 8px;
+    top: -14px;
+    z-index: 21;
 }
 
 .cell-left-panel, .cell-right-empty {

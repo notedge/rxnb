@@ -1,5 +1,7 @@
 use std::mem::swap;
 
+use yew::html::ChangeData::Select;
+
 #[derive(Clone, Debug)]
 pub struct LanguageConfig {
     is_markup: bool,
@@ -13,13 +15,18 @@ pub struct NotebookLanguage {
     last_code: LanguageConfig,
 }
 
-impl Default for NotebookLanguage {
+impl Default for LanguageConfig {
     fn default() -> Self {
-        let notedown = LanguageConfig {
+        Self {
             is_markup: true,
             name: String::from("notedown"),
-        };
+        }
+    }
+}
 
+impl Default for NotebookLanguage {
+    fn default() -> Self {
+        let notedown = LanguageConfig::default();
         Self {
             current: notedown.to_owned(),
             last_markup: notedown,
@@ -31,6 +38,7 @@ impl Default for NotebookLanguage {
     }
 }
 
+impl LanguageConfig {}
 
 impl NotebookLanguage {
     pub fn switch(&mut self) {

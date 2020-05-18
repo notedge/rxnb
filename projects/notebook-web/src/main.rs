@@ -7,10 +7,8 @@ use yew::{
     Html, prelude::*, services::reader::{FileData, ReaderService, ReaderTask}, ShouldRender,
 };
 
-use rxnb::cell::NotebookCell;
-use rxnb::widgets::{NotebookHeader, NotebookLeftPanel, NotebookTabs};
-
-mod cell;
+use rxnb_web::cell::NotebookCell;
+use rxnb_web::widgets::{NotebookHeader, NotebookLeftPanel, NotebookTabs};
 
 pub enum Event {
     Input(String),

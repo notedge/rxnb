@@ -1,4 +1,5 @@
 use std::iter::FromIterator;
+use std::ops::Div;
 use std::rc::Rc;
 
 use monaco::api::CodeEditorOptions;
@@ -7,6 +8,9 @@ use monaco::yew::{CodeEditor, CodeEditorLink};
 use yew::prelude::*;
 use yew::services::ConsoleService;
 use yew::web_sys::KeyboardEvent;
+
+use crate::configs::LanguageConfig;
+use crate::widgets::icons;
 
 pub enum Event {
     Input(InputData),
@@ -41,9 +45,15 @@ pub enum CellState {
 pub struct NotebookCell {
     link: ComponentLink<Self>,
     editor_link: CodeEditorLink,
+    /// run ID
     id: usize,
+    expand: bool,
+    pin: bool,
+    ///
     state: CellState,
-    kind: String,
+    ///
+    ///
+    language: LanguageConfig,
     out: Html,
 }
 
@@ -55,8 +65,10 @@ impl Component for NotebookCell {
         Self {
             link,
             id: 0,
+            expand: false,
+            pin: false,
             state: CellState::Unevaluated,
-            kind: "".to_string(),
+            language: LanguageConfig::default(),
             editor_link: CodeEditorLink::default(),
             out: Html::from(200),
         }
@@ -98,25 +110,13 @@ impl Component for NotebookCell {
             <div data-node-id=self.id class="notebook-cell">
                 //<div class="drag-marker-before"></div>
                 //<div class="drag-marker-after"></div>
-                <button class="cell-create">
-                    <div class="tooltip">
-                        <svg viewBox="0 0 15 15" width="15" height="15" stroke="currentColor"
-                            style="stroke-width: 1; stroke-linecap: round;">
-                            <line x1="7.5" x2="7.5" y1="2.5" y2="12.5"></line>
-                            <line y1="7.5" y2="7.5" x1="2.5" x2="12.5"></line>
-                        </svg>
-                        <div class="tooltip-text">
-                    //        {"Click to insert new cell (alt-enter)"}
-                        </div>
-                    </div>
-                </button>
+                {self.cell_create_button()}
                 <div class="cell-body">
-                    <div class="cell-left-panel">
-                        <button class="more-ops"></button>
-                    </div>
+                    {self.left_panel()}
                     <div class="cell-right-panel">
                     {self.input_area()}
                     {self.out.to_owned()}
+                    {self.cell_toolbar()}
                     </div>
                     <div class="cell-right-empty"/>
                 </div>
@@ -145,7 +145,52 @@ impl NotebookCell {
         }
     }
 
+    fn left_panel(&self) -> Html {
+        html! {
+            <div class="cell-left-panel">
+                // {self.cell_run_button()}
+            </div>
+        }
+    }
+
+    fn cell_toolbar(&self) -> Html {
+        html! {
+            <div class="cell-toolbar">
+                {self.cell_create_button()}
+                {self.cell_create_button()}
+            </div>
+        }
+    }
+
     //fn get_input(&mut self) {}
 
     //fn update_out(&mut self) {}
 }
+
+impl NotebookCell {
+    fn cell_create_button(&self) -> Html {
+        html! {
+        <button class="cell-create">
+            <div class="tooltip">
+                {icons::add_icon(15)}
+                <div class="tooltip-text">
+                    {"Click to insert new cell"}
+                </div>
+            </div>
+        </button>
+        }
+    }
+    fn cell_run_button(&self) -> Html {
+        html! {
+        <button class="cell-run">
+            <div class="tooltip">
+                {icons::run_icon(16)}
+                <div class="tooltip-text">
+                    {"Click to insert new cell"}
+                </div>
+            </div>
+        </button>
+        }
+    }
+}
+

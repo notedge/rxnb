@@ -7,4 +7,4 @@ pub use self::tabs::NotebookTabs;
 mod tabs;
 mod header;
 mod sides;
-
+pub mod icons;

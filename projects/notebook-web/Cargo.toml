@@ -1,5 +1,5 @@
 [package]
-name = "rxnb"
+name = "rxnb-web"
 publish = false
 version = "0.1.0"
 authors = ["Aster <192607617@qq.com>"]
