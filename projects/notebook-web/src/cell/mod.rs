@@ -18,6 +18,7 @@ pub enum Event {
     Mode(ChangeData),
     Update(ChangeData),
     Press(KeyboardEvent),
+    RunCell,
 }
 
 pub enum CellState {
@@ -98,6 +99,10 @@ impl Component for NotebookCell {
                 // }
                 false
             }
+            Event::RunCell => {
+                ConsoleService::info(&format!("{:?}", self.editor_link.get_value()));
+                false
+            }
         }
     }
 
@@ -156,8 +161,10 @@ impl NotebookCell {
     fn cell_toolbar(&self) -> Html {
         html! {
             <div class="cell-toolbar">
-                {self.cell_create_button()}
-                {self.cell_create_button()}
+                {self.cell_run_button()}
+                {self.remove_button()}
+                {self.cell_more_button()}
+
             </div>
         }
     }
@@ -168,29 +175,45 @@ impl NotebookCell {
 }
 
 impl NotebookCell {
+    #[inline]
     fn cell_create_button(&self) -> Html {
-        html! {
-        <button class="cell-create">
-            <div class="tooltip">
-                {icons::add_icon(15)}
-                <div class="tooltip-text">
-                    {"Click to insert new cell"}
-                </div>
-            </div>
-        </button>
-        }
+        cell_with_tooltip(icons::add_icon(15), "[unimplemented]Click to insert new cell")
     }
+    #[inline]
+    fn cell_more_button(&self) -> Html {
+        cell_with_tooltip(icons::tab_icon(16), "[unimplemented]Click to show more operations")
+    }
+    #[inline]
+    fn cell_share_button(&self) -> Html {
+        cell_with_tooltip(icons::link_icon(16), "[unimplemented]Click to share this cell")
+    }
+
     fn cell_run_button(&self) -> Html {
+        let click_callback = self.link.callback(|_| Event::RunCell);
         html! {
-        <button class="cell-run">
+        <button class="cell-run" onclick=click_callback>
             <div class="tooltip">
                 {icons::run_icon(16)}
                 <div class="tooltip-text">
-                    {"Click to insert new cell"}
+                    {"Click to run cell"}
                 </div>
             </div>
         </button>
         }
     }
+    #[inline]
+    fn remove_button(&self) -> Html {
+        cell_with_tooltip(icons::remove_icon(16), "[unimplemented]Click to remove this cell")
+    }
 }
 
+pub fn cell_with_tooltip(icon: Html, text: &str) -> Html {
+    html! {
+    <button class="cell-run">
+        <div class="tooltip">
+            {icon}
+            <div class="tooltip-text">{text}</div>
+        </div>
+    </button>
+    }
+}
