@@ -1,11 +1,11 @@
 use super::*;
 
-pub struct NotebookTabs {
+pub struct NotebookSplit {
     link: ComponentLink<Self>,
 }
 
 
-impl Component for NotebookTabs {
+impl Component for NotebookSplit {
     type Message = ();
     type Properties = ();
 
@@ -13,7 +13,7 @@ impl Component for NotebookTabs {
         Self { link }
     }
 
-    fn update(&mut self, _msg: Self::Message) -> bool {
+    fn update(&mut self, msg: Self::Message) -> bool {
         todo!()
     }
 
@@ -23,7 +23,13 @@ impl Component for NotebookTabs {
 
     fn view(&self) -> Html {
         html! {
-        <nav class="notebook-tab">{"demo.rxnb"}</nav>
+        <div class="notebook-cell-split">
+            {"title"}
+        </div>
         }
     }
+}
+
+impl NotebookSplit {
+    fn btn_add_new(&self) {}
 }

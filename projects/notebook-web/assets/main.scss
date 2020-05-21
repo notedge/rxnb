@@ -47,6 +47,7 @@ header {
 
 .notebook-left-panel {
     display: flex;
+    flex-flow: column;
     flex-shrink: 0;
     border-right: 1px solid $nb-border-color;
     margin-top: 0;
@@ -134,6 +135,7 @@ header {
 
 .cell-left-panel {
     display: flex;
+
     flex-flow: column;
 }
 
