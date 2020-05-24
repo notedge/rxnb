@@ -7,7 +7,7 @@ use yew::{
     Html, prelude::*, services::reader::{FileData, ReaderService, ReaderTask}, ShouldRender,
 };
 
-use rxnb_web::cell::NotebookCell;
+use rxnb_web::cell::{NotebookCell, NotebookSplit};
 use rxnb_web::widgets::{NotebookHeader, NotebookLeftPanel, NotebookTabs};
 
 pub enum Event {
@@ -48,11 +48,13 @@ impl Component for Model {
             <div class="notebook-right-panel">
                 <NotebookTabs/>
                 <article class="notebook-body">
+                    <NotebookSplit/>
                     <NotebookCell/>
+                    <NotebookSplit/>
                     <NotebookCell/>
+                    <NotebookSplit/>
                     <NotebookCell/>
-                    <NotebookCell/>
-                    <NotebookCell/>
+                    <NotebookSplit/>
                 </article>
             </div>
         </main>

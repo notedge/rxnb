@@ -6,6 +6,7 @@ use monaco::api::CodeEditorOptions;
 use monaco::sys::editor::IDimension;
 use monaco::yew::{CodeEditor, CodeEditorLink};
 use yew::prelude::*;
+use yew::Renderable;
 use yew::services::ConsoleService;
 use yew::web_sys::KeyboardEvent;
 
@@ -20,6 +21,7 @@ pub enum Event {
     Press(KeyboardEvent),
     RunCell,
     ChangePinState,
+    RenderOutput(String),
 }
 
 pub enum CellState {
@@ -46,6 +48,7 @@ pub enum CellState {
 
 pub struct NotebookCell {
     link: ComponentLink<Self>,
+    editor: Html,
     editor_link: CodeEditorLink,
     /// run ID
     id: usize,
@@ -71,6 +74,7 @@ impl Component for NotebookCell {
             pin: false,
             state: CellState::Unevaluated,
             language: LanguageConfig::default(),
+            editor: Default::default(),
             editor_link: CodeEditorLink::default(),
             out: Html::from(200),
         }
@@ -101,42 +105,29 @@ impl Component for NotebookCell {
                 false
             }
             Event::RunCell => {
-                ConsoleService::info(&format!("{:?}", self.editor_link.get_value()));
-                true
+                match self.editor_link.get_value() {
+                    Some(s) => { self.link.callback(Event::RenderOutput).emit(s) },
+                    None => (),
+                }
+                false
             }
             Event::ChangePinState => {
                 self.pin = !self.pin;
                 true
             }
+            Event::RenderOutput(s) => {
+                ConsoleService::info(&s);
+                self.out = Html::from(s);
+                true
+            }
         }
     }
 
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+    fn change(&mut self, _: Self::Properties) -> ShouldRender {
         false
     }
 
     fn view(&self) -> Html {
-        html! {
-            <div data-node-id=self.id class="notebook-cell">
-                //<div class="drag-marker-before"></div>
-                //<div class="drag-marker-after"></div>
-                {self.cell_create_button()}
-                <div class="notebook-cell">
-                    {self.left_panel()}
-                    <div class="cell-right-panel">
-                    {self.input_area()}
-                    {self.out.to_owned()}
-                    {self.cell_toolbar()}
-                    </div>
-                    <div class="cell-right-empty"/>
-                </div>
-            </div>
-        }
-    }
-}
-
-impl NotebookCell {
-    fn input_area(&self) -> Html {
         //let key = self.link.callback(Event::Press);
         //let txt = self.link.callback(Event::Input);
         let options = CodeEditorOptions {
@@ -144,17 +135,27 @@ impl NotebookCell {
             theme: None,
             model: None,
             language: None,
-            value: None,
+            value: Some("200".to_string()),
         };
-
         html! {
+        <div class="notebook-cell" data-node-id=self.id>
+            {self.left_panel()}
+            <div class="cell-right-panel">
             <CodeEditor
                 link=self.editor_link.clone()
                 options=Rc::new(options)
             />
+            {self.out.to_owned()}
+            {self.cell_toolbar()}
+            </div>
+            <div class="cell-right-empty"/>
+        </div>
         }
     }
+    fn rendered(&mut self, _: bool) {}
+}
 
+impl NotebookCell {
     fn left_panel(&self) -> Html {
         html! {
             <div class="cell-left-panel">
@@ -180,10 +181,6 @@ impl NotebookCell {
 }
 
 impl NotebookCell {
-    #[inline]
-    fn cell_create_button(&self) -> Html {
-        cell_with_tooltip(icons::add_icon(15), "[unimplemented]Click to insert new cell")
-    }
     #[inline]
     fn cell_more_button(&self) -> Html {
         cell_with_tooltip(icons::tab_icon(16), "[unimplemented]Click to show more operations")

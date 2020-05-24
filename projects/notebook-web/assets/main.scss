@@ -79,6 +79,8 @@ header {
 
 
 .notebook-cell {
+    display: flex;
+    flex-flow: row;
     margin-top: 17px;
     margin-bottom: 17px;
     // padding-top: 0px;
@@ -95,9 +97,9 @@ header {
     position: absolute;
     //top: -2em;
     //left: 50%;
-    //width: 200px;
     display: none;
-    white-space: nowrap;
+    width: max-content;
+    // white-space: nowrap;
     // transform: translate(-50%, 0);
 }
 
@@ -105,11 +107,7 @@ header {
     display: block;
 }
 
-.cell-create {
-    // top: -20px;
-    // left: -12px;
-    width: 24px;
-    height: 24px;
+button {
     padding: 4px;
     background-color: #00000000;
     border-color: #00000000;
@@ -135,7 +133,6 @@ header {
 
 .cell-left-panel {
     display: flex;
-
     flex-flow: column;
 }
 
@@ -144,6 +141,10 @@ header {
     flex-basis: $nb-cell-width;
 }
 
+.cell-left-panel, .cell-right-empty {
+    flex-basis: (100% - $nb-cell-width)/2;
+    min-width: 200px;
+}
 
 .cell-toolbar {
     background: #ffffff;
@@ -154,10 +155,6 @@ header {
     right: 8px;
     top: -14px;
     z-index: 21;
-}
-
-.cell-left-panel, .cell-right-empty {
-    flex-basis: (100% - $nb-cell-width)/2;
 }
 
 .cell-input-area {
