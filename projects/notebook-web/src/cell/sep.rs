@@ -32,10 +32,10 @@ impl Component for NotebookSplit {
     fn view(&self) -> Html {
         html! {
         <div class="notebook-cell-split">
-            <div class="drag-marker-before"></div>
-
+            // <div class="drag-marker-before"></div>
+            <div class="split-left-empty"></div>
             {self.btn_add_new()}
-            <div class="drag-marker-after"></div>
+            // <div class="drag-marker-after"></div>
         </div>
         }
     }

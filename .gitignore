@@ -33,3 +33,5 @@ target/
 dist/
 yarn.lock
 Cargo.lock
+*.ps1
+*.nb
