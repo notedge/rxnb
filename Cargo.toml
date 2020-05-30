@@ -2,7 +2,7 @@
 members = ["projects/*"]
 default-members = [
     # "projects/notebook-rs",
-    # "projects/notebook-cilent",
+    "projects/notebook-server",
     "projects/notebook-web",
 ]
 exclude = [
