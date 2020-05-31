@@ -1,8 +1,8 @@
 pub use error::{KaTeXError, KaTeXResult};
 
 mod error;
-mod options;
 mod lexer;
+mod options;
 
 #[derive(Debug, Clone)]
 pub struct KaTeXEngine {

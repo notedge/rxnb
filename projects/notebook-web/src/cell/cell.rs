@@ -1,17 +1,13 @@
-use std::iter::FromIterator;
-use std::ops::Div;
-use std::rc::Rc;
+use std::{iter::FromIterator, ops::Div, rc::Rc};
 
-use monaco::api::CodeEditorOptions;
-use monaco::sys::editor::IDimension;
-use monaco::yew::{CodeEditor, CodeEditorLink};
-use yew::prelude::*;
-use yew::Renderable;
-use yew::services::ConsoleService;
-use yew::web_sys::KeyboardEvent;
+use monaco::{
+    api::CodeEditorOptions,
+    sys::editor::IDimension,
+    yew::{CodeEditor, CodeEditorLink},
+};
+use yew::{prelude::*, Renderable, services::ConsoleService, web_sys::KeyboardEvent};
 
-use crate::configs::LanguageConfig;
-use crate::widgets::icons;
+use crate::{configs::LanguageConfig, widgets::icons};
 
 pub enum Event {
     Input(InputData),
@@ -45,7 +41,6 @@ pub enum CellState {
     OK,
 }
 
-
 pub struct NotebookCell {
     link: ComponentLink<Self>,
     editor: Html,
@@ -56,7 +51,6 @@ pub struct NotebookCell {
     pin: bool,
     ///
     state: CellState,
-    ///
     ///
     language: LanguageConfig,
     out: Html,
@@ -86,9 +80,9 @@ impl Component for NotebookCell {
                 // self.input = s.value;
                 false
             }
-            Event::Length(_) => { false }
-            Event::Mode(_) => { false }
-            Event::Update(_) => { false }
+            Event::Length(_) => false,
+            Event::Mode(_) => false,
+            Event::Update(_) => false,
             Event::Press(_key) => {
                 // self.out = Html::from_iter(self.input.lines().map(|e| html! { <div>{e}</div>}));
                 // ConsoleService::info(&key.code());
@@ -106,7 +100,7 @@ impl Component for NotebookCell {
             }
             Event::RunCell => {
                 match self.editor_link.get_value() {
-                    Some(s) => { self.link.callback(Event::RenderOutput).emit(s) },
+                    Some(s) => self.link.callback(Event::RenderOutput).emit(s),
                     None => (),
                 }
                 false
@@ -128,8 +122,8 @@ impl Component for NotebookCell {
     }
 
     fn view(&self) -> Html {
-        //let key = self.link.callback(Event::Press);
-        //let txt = self.link.callback(Event::Input);
+        // let key = self.link.callback(Event::Press);
+        // let txt = self.link.callback(Event::Input);
         let options = CodeEditorOptions {
             dimension: Some(IDimension::new(800, 300)),
             theme: None,
@@ -175,9 +169,9 @@ impl NotebookCell {
         }
     }
 
-    //fn get_input(&mut self) {}
+    // fn get_input(&mut self) {}
 
-    //fn update_out(&mut self) {}
+    // fn update_out(&mut self) {}
 }
 
 impl NotebookCell {

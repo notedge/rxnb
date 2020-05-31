@@ -4,7 +4,6 @@ pub struct NotebookTabs {
     link: ComponentLink<Self>,
 }
 
-
 impl Component for NotebookTabs {
     type Message = ();
     type Properties = ();

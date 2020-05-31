@@ -6,7 +6,6 @@ pub struct NotebookLeftPanel {
     link: ComponentLink<Self>,
 }
 
-
 impl Component for NotebookLeftPanel {
     type Message = ();
     type Properties = ();

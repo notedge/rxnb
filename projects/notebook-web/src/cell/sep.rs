@@ -3,13 +3,12 @@ use crate::widgets::icons;
 use super::*;
 
 pub enum Event {
-    CreateNewCell(usize)
+    CreateNewCell(usize),
 }
 
 pub struct NotebookSplit {
     link: ComponentLink<Self>,
 }
-
 
 impl Component for NotebookSplit {
     type Message = Event;
@@ -21,7 +20,7 @@ impl Component for NotebookSplit {
 
     fn update(&mut self, msg: Self::Message) -> bool {
         match msg {
-            Event::CreateNewCell(_) => { false }
+            Event::CreateNewCell(_) => false,
         }
     }
 

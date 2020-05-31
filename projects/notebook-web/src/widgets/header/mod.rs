@@ -4,7 +4,6 @@ pub struct NotebookHeader {
     link: ComponentLink<Self>,
 }
 
-
 impl Component for NotebookHeader {
     type Message = ();
     type Properties = ();

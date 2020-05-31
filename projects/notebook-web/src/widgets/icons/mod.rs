@@ -20,7 +20,6 @@ pub fn run_icon(u: usize) -> Html {
     }
 }
 
-
 pub fn remove_icon(u: usize) -> Html {
     html! {
     <svg viewBox="0 0 1024 1024" width={u} height={u}>
@@ -46,7 +45,6 @@ pub fn tab_icon(u: usize) -> Html {
     }
 }
 
-
 pub fn link_icon(u: usize) -> Html {
     html! {
     <svg viewBox="0 0 1024 1024" width={u} height={u}>
@@ -68,7 +66,6 @@ pub fn pin_icon(u: usize) -> Html {
     }
 }
 
-
 pub fn move_icon(u: usize) -> Html {
     html! {
     <svg viewBox="0 0 1024 1024" width={u} height={u}>
@@ -78,7 +75,6 @@ pub fn move_icon(u: usize) -> Html {
     </svg>
     }
 }
-
 
 pub fn toc_icon(u: usize) -> Html {
     html! {
@@ -111,7 +107,6 @@ pub fn search_icon(u: usize) -> Html {
     </svg>
     }
 }
-
 
 pub fn user_icon(u: usize) -> Html {
     html! {

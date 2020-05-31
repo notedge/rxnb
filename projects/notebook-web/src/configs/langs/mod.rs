@@ -17,10 +17,7 @@ pub struct NotebookLanguage {
 
 impl Default for LanguageConfig {
     fn default() -> Self {
-        Self {
-            is_markup: true,
-            name: String::from("notedown"),
-        }
+        Self { is_markup: true, name: String::from("notedown") }
     }
 }
 
@@ -30,10 +27,7 @@ impl Default for NotebookLanguage {
         Self {
             current: notedown.to_owned(),
             last_markup: notedown,
-            last_code: LanguageConfig {
-                is_markup: false,
-                name: String::from("valkyrie"),
-            },
+            last_code: LanguageConfig { is_markup: false, name: String::from("valkyrie") },
         }
     }
 }
